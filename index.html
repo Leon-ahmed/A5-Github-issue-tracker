@@ -34,10 +34,10 @@
 <div class="w-11/12 mx-auto flex flex-col mt-6  ">
 
 <label class="font-medium mb-1">Username</label>
-<input type="text" class="py-2 px-2 border-gray-200 rounded-md " placeholder="Enter Username" >
+<input id="name" type="text" class="py-2 px-2 border-gray-200 rounded-md " placeholder="Enter Username" >
 <span class="blue">Default: admin</span>
 <label class="font-medium mt-4 mb-1">Password</label>
-<input type="password"  class="py-2 px-2 border-gray-200 rounded-md " placeholder="Enter Password">
+<input id="password" type="password"  class="py-2 px-2 border-gray-200 rounded-md " placeholder="Enter Password">
 <span class="blue">Default: admin123</span>
 
 
@@ -45,7 +45,7 @@
 </div>
 
 <div class="sign-btn w-11/12 mx-auto mt-6 rounded-md ">
-  <button class="btn btn-primary w-full">Sign In</button>
+  <button id="login-btn" class="btn btn-primary w-full">Sign In</button>
    
   <div class=" flex flex-row items-center gap-2 mt-6">
      <hr class="flex-1 border-1 border-[#E4E4E7]">
@@ -77,6 +77,6 @@
 
 
 
-    
+   <script src="./Javascript/login.js"></script> 
 </body>
 </html>
