@@ -10,3 +10,13 @@
 .gray{
     color:#64748B;
 }
+
+.Active{
+ background-color:#4A00FF ;
+ color: #ffffff;
+}
+.Remove{
+    background-color:#ffffff ;
+    color: #64748B;
+    border: 1 solid #E4E4E8
+} 
