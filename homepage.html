@@ -39,9 +39,11 @@
             </div>
 
             <div class="pl-3 md:flex gap-4 mt-5 space-y-2">
+
+              
                      <div class="search">
-                <label class="input">
-  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <label class="input p-0 pl-4">
+  <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <g
       stroke-linejoin="round"
       stroke-linecap="round"
@@ -53,7 +55,8 @@
       <path d="m21 21-4.3-4.3"></path>
     </g>
   </svg>
-  <input type="search" required placeholder="Search issues" />
+  <input id="Search" type="search"    required placeholder="Search issues" />
+  <button id="searchbtn" class="btn  btn-primary btn-soft rounded-[50pxpx] border-1 border-gray-200  ">Search</button>
 </label>
              </div>
             
@@ -129,8 +132,7 @@
 
 
          <section>
-          <!-- You can open the modal using ID.showModal() method -->
-<!-- <button class="btn" onclick="my_modal_4.showModal()">open modal</button> -->
+ <!-- Modal  -->
 <dialog id="my_modal_4" class="modal">
   <div id="modalcontainer"></div>
   
