@@ -1,11 +1,22 @@
+
+let allCardsData = [];
 const loadCard=()=>{
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then ((res)=>res.json())
-    .then((all)=>displayCard(all.data))
+    .then((all)=>{
+       allCardsData= all.data;   
+      displayCard(all.data);
+
+            
+    }
+      
+      
+      )
 
 }
 
 const displayCard=(cards)=>{
+  spinner(true);
 const container=document.getElementById("allCard");
 container.innerHTML=" ";
 const cardCount=document.getElementById("allCount");
@@ -104,7 +115,7 @@ Label += `
 
 Div.innerHTML=`
 
-<div class="card w-11/12 mx-auto  min-h-[400px] bg-[#ffffff]  shadow-md  border-t-4 rounded-md  "  style="border-top-color:${border};">
+<div  onclick="my_modal_4.showModal()"  class="card w-11/12 mx-auto  min-h-[400px] bg-[#ffffff]  shadow-md  border-t-4 rounded-md  "  style="border-top-color:${border};">
                    <div class="flex justify-between p-4 ">
                     <img src="${Clogo}" alt="">
                     <div>
@@ -143,7 +154,37 @@ container.append(Div);
 
 
 
+
 }}
+
+// filtering
+
+document.getElementById("All").addEventListener("click",()=>{
+  spinner(false);
+ setTimeout(()=>displayCard(allCardsData), 300);
+
+});
+document.getElementById("Open").addEventListener("click",()=>{
+   
+  spinner(false);
+  const openData=allCardsData.filter(card=>card.status=="open");
+   setTimeout(()=>displayCard(openData), 300);
+
+
+});
+document.getElementById("Close").addEventListener("click",()=>{
+   spinner(false);
+  const closeData=allCardsData.filter(card=>card.status=="closed");
+   setTimeout(()=>displayCard(closeData), 300);
+
+
+});
+
+
+
+
+
+
 loadCard();
 
 
@@ -166,3 +207,38 @@ for(const id of ids){
   }
 }
 };
+
+
+// Spinner 
+
+const spinner=(Status)=>{
+
+if(Status==true){
+document.getElementById("spinner").classList.add("hidden");
+document.getElementById("allCard").classList.remove("hidden");
+
+}
+else{
+document.getElementById("spinner").classList.remove("hidden");
+document.getElementById("allCard").classList.add("hidden");
+
+}
+
+
+
+}
+
+// ModalDisplay
+
+const modalData=async(id)=>{
+const url='https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}';
+const res=await fetch(url);
+const details=await res.json();
+
+displayModal(DataTransferItemList.data);
+
+
+
+
+}
+
