@@ -115,7 +115,7 @@ Label += `
 
 Div.innerHTML=`
 
-<div  onclick="my_modal_4.showModal()"  class="card w-11/12 mx-auto  min-h-[400px] bg-[#ffffff]  shadow-md  border-t-4 rounded-md  "  style="border-top-color:${border};">
+<div onclick="modalData(${card.id})" class="card w-11/12 mx-auto  min-h-[400px] bg-[#ffffff]  shadow-md  border-t-4 rounded-md" style="border-top-color:${border};">
                    <div class="flex justify-between p-4 ">
                     <img src="${Clogo}" alt="">
                     <div>
@@ -135,7 +135,7 @@ Div.innerHTML=`
 
                    <div class="gray   p-4">
                     <p>${card.assignee ?card.assignee :"Not Mentioned" }</p>
-                    <span>${card.updatedAt}</span>
+                    <span>${card.createdAt}</span>
                    </div>
 
                </div>
@@ -228,17 +228,179 @@ document.getElementById("allCard").classList.add("hidden");
 
 }
 
+
+
+
 // ModalDisplay
 
 const modalData=async(id)=>{
-const url='https://phi-lab-server.vercel.app/api/v1/lab/issue/{id}';
+const url=`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
 const res=await fetch(url);
 const details=await res.json();
 
-displayModal(DataTransferItemList.data);
+if(details && details.data){
+  displayModal(details.data);
+}
 
 
 
 
 }
 
+
+// "status": "success",
+// "message": "Issue fetched successfully",
+// "data": {
+// "id": 33,
+// "title": "Add bulk operations support",
+// "description": "Allow users to perform bulk actions like delete, update status on multiple items at once.",
+// "status": "open",
+// "labels": [
+// "enhancement"
+// ],
+// "priority": "low",
+// "author": "bulk_barry",
+// "assignee": "",
+// "createdAt": "2024-02-02T10:00:00Z",
+// "updatedAt": "2024-02-02T10:00:00Z"
+// }
+// }
+
+
+
+ const displayModal=(card)=>{
+
+
+
+
+let priorityBG="";
+let priorityTxt="";
+
+if(card.priority==="high"){
+    priorityBG="#EF4444";
+   priorityTxt="#ffffff";  
+}
+else if(card.priority==="medium"){
+    priorityBG="#F59E0B";
+   priorityTxt="#ffffff";  
+}
+else{
+    priorityBG="#9CA3AF";
+   priorityTxt="#ffffff";  
+}
+
+
+let Label="";
+for(let label of card.labels){
+let bg="";
+let border=""
+let txt="";
+let icon="";
+
+  if (label === "bug") {
+    bg = "#FEECEC";
+    border=""
+    txt = "#EF4444";
+    icon='<i class="fa-solid fa-bug"></i>'
+  }
+  else if (label === "documentation"){
+   bg = "#E0F2FE";
+    txt = "#0284C7";
+    border = "#0284C7";
+    icon='<i class="fa-brands fa-readme"></i>'
+  }
+  else if (label === "enhancement") {
+    bg = "#DEFCE8";
+    border="#BBF7D0"
+    txt = "#00A96E";
+    icon='<i class="fa-solid fa-hand-sparkles"></i>'
+  }
+
+   else if (label === "help wanted"){
+    bg = "#FFF8DB";
+    border="FDE68A"
+    txt = "#D97706";
+    icon='<i class="fa-brands fa-chrome"></i>'
+  }
+   else{
+    bg = "#FFF8DB";
+    border="#EAB308"
+    txt = "#EAB308";
+    icon='<i class="fa-solid fa-dna"></i>'
+  }
+
+
+Label += `
+<span class="rounded-xl px-3 border inline-flex items-center gap-1"
+      style="background:${bg}; color:${txt}; border:1px solid ${border};">
+      ${icon} ${label}
+</span>
+`;
+}
+
+
+
+let Bg="";
+let Txt="";
+if(card.status=="open"){
+    Bg="#00A96E";
+    Txt="#ffffff"
+
+}
+else {
+    Bg="#A855F7";
+    Txt="#ffffff"
+
+}
+
+
+
+
+
+const detailCard=document.getElementById("modalcontainer");
+detailCard.innerHTML=`
+   <div class="modal-box w-11/12 max-w-3xl  space-y-2">
+    <h3 class="text-lg font-bold">${card.title}</h3>
+      <div class="modalstatus flex  space-x-2 items-center">
+         <span class="px-2 py-1  text-sm rounded-xl" style="Background-color:${Bg};color:${Txt};">${card.status=="open"?"Opened":"Closed"}</span>
+            <ul class="flex items-center gray space-x-3" >
+              
+              <li class="flex   items-center space-x-2"><div class="w-[4px] h-[4px] bg-[#64748B] rounded-full"></div> <span>Opened by ${card.assignee?card.assignee:"(not mentioned)"}</span></li>
+              <li class="flex   items-center space-x-2"><div class="w-[4px] h-[4px] bg-[#64748B] rounded-full"></div> <span>${card.createdAt}</span></li>
+
+          
+            </ul>
+
+      </div>
+
+        <div>
+                <span class="px-2 py-1  text-sm rounded-xl">  ${Label}</span>
+                 
+            </div>
+
+
+    <p class="py-4 gray">${card.description}</p>
+   
+   <div class="modalFooter grid grid-cols-2 bg-[#F8FAFC] rounded-md p-4">
+    <div>
+      <p class="gray">Assignee:</p>
+      <p>${card.assignee? card.assignee:"Not Mentioned"}</p>
+    </div>
+    <div>
+      <p class="gray">Priority:</p>
+      <span class="px-2 py-1  text-sm rounded-xl" style="background:${priorityBG};color:${priorityTxt};">${card.priority}</span>
+    </div>
+   </div>
+   
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button, it will close the modal -->
+        <button class="btn btn-primary border-none">Close</button>
+      </form>
+    </div>
+  </div>
+
+`;
+
+ document.getElementById("my_modal_4").showModal();
+ };
