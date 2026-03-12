@@ -331,7 +331,7 @@ else {
 
 const detailCard=document.getElementById("modalcontainer");
 detailCard.innerHTML=`
-   <div class="modal-box w-11/12 max-w-3xl  space-y-2">
+   <div class="modal-box w-11/12 mx-auto max-w-3xl  space-y-2">
     <h3 class="text-lg font-bold">${card.title}</h3>
       <div class="modalstatus flex  space-x-2 items-center">
          <span class="px-2 py-1  text-sm rounded-xl" style="Background-color:${Bg};color:${Txt};">${card.status=="open"?"Opened":"Closed"}</span>
